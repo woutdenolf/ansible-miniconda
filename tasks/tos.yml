@@ -1,0 +1,16 @@
+- name: Check if `conda tos` is available
+  ansible.builtin.command: "{{ miniconda_prefix }}/bin/{{ miniconda_executable }} tos --help"
+  register: __miniconda_tos_check
+  changed_when: false
+  failed_when: false
+
+- name: Accept Terms of Service for provided channels
+  ansible.builtin.command: >
+    {{ miniconda_prefix }}/bin/{{ miniconda_executable }} tos accept
+    --override-channels --channel {{ item }}
+  args:
+    creates: "{{ miniconda_prefix }}/.conda_tos_{{ item | regex_replace('[^a-zA-Z0-9]', '_') }}"
+  loop: "{{ miniconda_tos_channels | default([]) }}"
+  when:
+    - miniconda_tos_channels | length > 0
+    - __miniconda_tos_check.rc == 0

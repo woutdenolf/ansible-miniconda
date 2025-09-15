@@ -19,6 +19,10 @@
   register: miniconda_installed_version
   changed_when: false
 
+- name: Accept Anaconda Terms of Service (ToS)
+  ansible.builtin.include_tasks: tos.yml
+  when: miniconda_tos_channels | length > 0
+
 - name: Update installer
   ansible.builtin.include_tasks: update.yml
   when: miniconda_update

@@ -14,6 +14,16 @@ miniconda_version: latest
 # `conda install conda...` or `conda update conda`.
 miniconda_channels: []
 
+# List of channels for which the Anaconda Terms of Service (ToS) should be accepted.
+# If left empty (default), no ToS acceptance will be attempted.
+#
+# Example:
+# miniconda_tos_channels:
+#   - https://repo.anaconda.com/pkgs/main
+#   - https://repo.anaconda.com/pkgs/r
+#
+miniconda_tos_channels: []
+
 # Use a specific installer version and python version. The default is to use the latest installer. If you specify a
 # version, it must exist in https://repo.anaconda.com/miniconda/
 #

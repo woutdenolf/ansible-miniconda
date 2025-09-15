@@ -47,6 +47,21 @@ distributions and versions.
 
 [galaxy-role]: https://github.com/galaxyproject/ansible-galaxy
 
+Terms of Service (ToS) for Conda Channels
++++++++++++++++++++++++++++++++++++++++++
+
+Some Conda channels require explicit acceptance of their Terms of Service (ToS).
+
+Use the `miniconda_tos_channels` variable to list the channels for which the role should pre-accept the ToS:
+
+```yaml
+miniconda_tos_channels:
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+```
+
+These are currently required when `miniconda_distribution: miniconda`.
+
 Dependencies
 ------------
 

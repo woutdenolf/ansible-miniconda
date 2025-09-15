@@ -46,6 +46,9 @@
         name: ansible-miniconda
       vars:
         miniconda_distribution: "miniconda"
+        miniconda_tos_channels:
+          - https://repo.anaconda.com/pkgs/main
+          - https://repo.anaconda.com/pkgs/r
         miniconda_conda_environments:
           test_env:
             channels:
