@@ -14,6 +14,16 @@ miniconda_version: latest
 # `conda install conda...` or `conda update conda`.
 miniconda_channels: []
 
+# List of channels for which the Anaconda Terms of Service (ToS) should be accepted.
+# If left empty (default), no ToS acceptance will be attempted.
+#
+# Example:
+# miniconda_tos_channels:
+#   - https://repo.anaconda.com/pkgs/main
+#   - https://repo.anaconda.com/pkgs/r
+#
+miniconda_tos_channels: []
+
 # Use a specific installer version and python version. The default is to use the latest installer. If you specify a
 # version, it must exist in https://repo.anaconda.com/miniconda/
 #
@@ -26,6 +36,11 @@ miniconda_installer_version: latest
 # e.g.
 # miniconda_base_env_packages: ['mamba']
 miniconda_base_env_packages: []
+
+# List packages to install into conda's base environment for Tos support
+# e.g.
+# miniconda_tos_packages: ['conda-anaconda-tos']
+miniconda_tos_packages: []
 
 # Create environments using the provided description. e.g.:
 #
@@ -150,3 +165,7 @@ miniconda_executable: >-
   {%- else -%}
     conda
   {%- endif -%}
+
+# Executable for acccepting the Terms of Service of the
+# channels provided by miniconda_tos_channels
+miniconda_tos_executable: "{{ 'conda' if miniconda_distribution != 'micromamba' else '' }}"

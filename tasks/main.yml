@@ -19,6 +19,20 @@
   register: miniconda_installed_version
   changed_when: false
 
+- name: Install ToS packages to conda base environment
+  ansible.builtin.command: >-
+    {{ miniconda_prefix }}/bin/{{ miniconda_executable }} install --yes
+    {{ '--override-channels --channel' if (miniconda_tos_channels) else '' }}
+    {{ miniconda_tos_channels | join(' --channel ') }}
+    {{ miniconda_tos_packages | join(' ') }}
+  register: __miniconda_conda_install_conda_output
+  changed_when: "'All requested packages already installed' not in __miniconda_conda_install_conda_output.stdout"
+  when: miniconda_tos_packages | length > 0
+
+- name: Accept Anaconda Terms of Service (ToS)
+  ansible.builtin.include_tasks: tos.yml
+  when: miniconda_tos_channels | length > 0
+
 - name: Update installer
   ansible.builtin.include_tasks: update.yml
   when: miniconda_update
@@ -31,7 +45,7 @@
     {{ miniconda_base_env_packages | join(' ') }}
   register: __miniconda_conda_install_conda_output
   changed_when: "'All requested packages already installed' not in __miniconda_conda_install_conda_output.stdout"
-  when: miniconda_base_env_packages
+  when: miniconda_base_env_packages | length > 0
 
 # Apparently item.value.copy always refers to the built-in copy method of the dict, whereas item.value['copy'] only does
 # if the key 'copy' is not defined
