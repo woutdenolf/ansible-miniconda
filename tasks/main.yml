@@ -19,6 +19,16 @@
   register: miniconda_installed_version
   changed_when: false
 
+- name: Install ToS packages to conda base environment
+  ansible.builtin.command: >-
+    {{ miniconda_prefix }}/bin/{{ miniconda_executable }} install --yes
+    {{ '--override-channels --channel' if (miniconda_tos_channels) else '' }}
+    {{ miniconda_tos_channels | join(' --channel ') }}
+    {{ miniconda_tos_packages | join(' ') }}
+  register: __miniconda_conda_install_conda_output
+  changed_when: "'All requested packages already installed' not in __miniconda_conda_install_conda_output.stdout"
+  when: miniconda_tos_packages | length > 0
+
 - name: Accept Anaconda Terms of Service (ToS)
   ansible.builtin.include_tasks: tos.yml
   when: miniconda_tos_channels | length > 0

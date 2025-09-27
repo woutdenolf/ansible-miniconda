@@ -24,6 +24,11 @@
         name: ansible-miniconda
       vars:
         miniconda_distribution: "miniforge"
+        miniconda_tos_channels:
+          - https://repo.anaconda.com/pkgs/main
+          - https://repo.anaconda.com/pkgs/r
+        miniconda_tos_packages:
+          - conda-anaconda-tos
         miniconda_conda_environments:
           test_env:
             channels:
@@ -72,6 +77,9 @@
       vars:
         miniconda_distribution: "anaconda"
         miniconda_installer_version: "2025.06-0"
+        miniconda_tos_channels:
+          - https://repo.anaconda.com/pkgs/main
+          - https://repo.anaconda.com/pkgs/r
         miniconda_conda_environments:
           test_env:
             channels:
@@ -94,6 +102,9 @@
         name: ansible-miniconda
       vars:
         miniconda_distribution: "micromamba"
+        miniconda_tos_channels:
+          - https://repo.anaconda.com/pkgs/main
+          - https://repo.anaconda.com/pkgs/r
         miniconda_conda_environments:
           test_env:
             channels:
